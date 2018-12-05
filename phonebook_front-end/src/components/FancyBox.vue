@@ -1,0 +1,182 @@
+<template>
+  <div class="fancybox" :class="{open: value}">
+    <div class="box-content" @click.self="updateValue(false)">
+      <div class="container">
+        <img src="../assets/XX.svg" class="close-btn" @click.stop="updateValue(false)" />
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'fancybox',
+    props: {
+      value: {
+        type: Boolean,
+        default: false
+      }
+    },
+    watch: {
+      value: function (newValue, oldValue) {
+        var isScrollSpace = navigator.userAgent.match(/(Mac|iPhone|iPod|iPad|Android)/i)
+        var eventKey = (event) => {
+          if (event.key === 'Escape') self.updateValue(false)
+        }
+        if (newValue) {
+          var self = this
+          window.addEventListener('keydown', eventKey)
+          if (isScrollSpace) {
+            window.document.body.classList.add('isShowFancyBox')
+          } else {
+            window.document.body.classList.add('isScrollSpaceFancyBox')
+          }
+        } else {
+          window.removeEventListener('keydown', eventKey)
+          if (isScrollSpace) {
+            window.document.body.classList.remove('isShowFancyBox')
+          } else {
+            window.document.body.classList.remove('isScrollSpaceFancyBox')
+          }
+        }
+      }
+    },
+    methods: {
+      updateValue (value) {
+        this.$emit('input', value)
+      }
+    }
+  }
+</script>
+
+<style lang="sass" scoped>
+.fancybox
+  .box-content
+    display: block
+    position: fixed
+    top: 100%
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 9999
+    background-color: rgba(0, 0, 0, 0)
+    user-select: text
+    transition: background-color .4s 0s, top .0s .4s
+    div.container
+      position: relative
+      color: black
+      white-space: pre-line
+      text-align: left
+      padding-top: 80px
+      padding-bottom: 40px
+      overflow-y: scroll
+      font-size: 18px
+      height: 100%
+      opacity: 0
+      transition: opacity .4s .0s
+      width: 67%
+      margin: 0 auto
+      &::-webkit-scrollbar
+        display: none
+      .close-btn
+        width: 30px
+        position: absolute
+        top: 40px
+        right: 15px
+        cursor: pointer
+      h2
+        font-size: 3rem
+        padding-bottom: 40px
+        @media all and (max-width: 800px)
+          font-size: 2rem
+        @media all and (max-width: 500px)
+          font-size: 1.5rem
+        @media all and (max-width: 400px)
+          font-size: 1.3rem
+      p
+        font-size: 1.5rem
+        padding-top: 5px
+        @media all and (max-width: 800px)
+          font-size: 1rem
+        span
+          padding-right: 20px
+      .content
+        padding-top: 0px
+        padding-bottom: 0px
+        font-size: 0px
+        height: auto
+        position: relative
+        *
+          display: inline-block
+          vertical-align: top
+        .text
+          padding-left: 30px
+          font-size: 24px;
+          width: 65%
+          height: auto
+          padding-top: 0px
+          padding-bottom: 0px
+        .img
+          float: right
+          width: 35%
+          padding-top: 0px
+          padding-bottom: 35%
+          height: 0px
+          overflow: auto
+          box-sizing: content-box
+          position: relative
+          img
+            position: absolute
+            display: block
+            margin-left: 20%
+            width: 80%
+            border-radius: 15px
+            border: 12px solid #3C4755
+            background-color: white
+          .image
+            position: absolute
+            width: 80%
+            margin-left: 20%
+            border-radius: 15px
+            border: 12px solid #3C4755
+            background-color: white
+            background-size: cover
+            background-position: center center
+            background-repeat: no-repeat
+      h3
+        font-size: 2rem
+        @media all and (max-width: 800px)
+          font-size: 1.5rem
+        @media all and (max-width: 500px)
+          font-size: 1rem
+        padding-top: 40px
+        padding-bottom: 20px
+@media all and (max-width: 1200px)
+  .fancybox
+    .box-content
+      div.container
+        padding-left: 5%
+        padding-right: 15px
+        width: 100%
+        .content
+          .text
+            width: 100%
+          .img
+            width: 100%
+            padding-bottom: 100%
+            img
+              margin: 0 auto
+              left: 10%
+              top: 10%
+            .image
+              margin-left: 10%
+.fancybox.open
+  .box-content
+    top: 0
+    background-color: rgba(0, 0, 0, 0.8)
+    transition: background-color .4s
+    div.container
+      opacity: 1
+      transition: opacity .4s
+</style>

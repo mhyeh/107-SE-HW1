@@ -1,0 +1,26 @@
+.vscode/
+phonebook_back-end/mode_modules/
+phonebook_back-end/dist
+phonebook_back-end/config
+
+phonebook_front-end/.DS_Store
+phonebook_front-end/node_modules/
+phonebook_front-end/dist/
+
+# local env files
+phonebook_front-end/.env.local
+phonebook_front-end/.env.*.local
+
+# Log files
+phonebook_front-end/npm-debug.log*
+phonebook_front-end/yarn-debug.log*
+phonebook_front-end/yarn-error.log*
+
+# Editor directories and files
+phonebook_front-end/.idea
+phonebook_front-end/.vscode
+phonebook_front-end/*.suo
+phonebook_front-end/*.ntvs*
+phonebook_front-end/*.njsproj
+phonebook_front-end/*.sln
+phonebook_front-end/*.sw*
